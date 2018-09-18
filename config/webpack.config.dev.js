@@ -149,6 +149,9 @@ module.exports = {
               // It enables caching results in ./node_modules/.cache/babel-loader/
               // directory for faster rebuilds.
               cacheDirectory: true,
+              plugins: [
+                  ['import', [{ libraryName: "antd", style: 'css' }]],
+              ],
             },
           },
           // "postcss" loader applies autoprefixer to our CSS.
@@ -218,7 +221,17 @@ module.exports = {
                   ],
                 },
               },
-              'less-loader'
+              {
+                loader: 'less-loader', // compiles Less to CSS
+                options: {
+                  modifyVars: {
+                    'primary-color': '#e4393c',
+                    'link-color': '#1DA57A',
+                    'border-radius-base': '2px',
+                  },
+                  javascriptEnabled: true,
+                },
+              }
             ],
           },
           // "file" loader makes sure those assets get served by WebpackDevServer.

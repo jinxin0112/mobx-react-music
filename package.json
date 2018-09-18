@@ -92,15 +92,7 @@
     "presets": [
       "react-app"
     ],
-    "plugins": [
-      [
-        "import",
-        {
-          "libraryName": "antd",
-          "libraryDirectory": "lib"
-        },
-        "ant"
-      ]
+    "plugins": [     
     ]
   },
   "eslintConfig": {
