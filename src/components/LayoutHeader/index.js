@@ -6,7 +6,7 @@ export default class LayoutHeader extends Component {
     render() {
         return (<Row>
             <Col span={4}>
-                <div className="music-logo">Jinxin React Music</div>
+                <div className="music-logo">🎵音乐播放器</div>
             </Col>
             <Col span={2}>
                 <div className="music-pre-back">
