@@ -150,7 +150,7 @@ module.exports = {
               // directory for faster rebuilds.
               cacheDirectory: true,
               plugins: [
-                  ['import', [{ libraryName: "antd", style: 'css' }]],
+                  ['import', [{ libraryName: "antd", style: true }]],
               ],
             },
           },
@@ -225,8 +225,8 @@ module.exports = {
                 loader: 'less-loader', // compiles Less to CSS
                 options: {
                   modifyVars: {
-                    'primary-color': '#e4393c',
-                    'link-color': '#1DA57A',
+                    'primary-color': '#b63a1e',
+                    'link-color': '#b63a1e',
                     'border-radius-base': '2px',
                   },
                   javascriptEnabled: true,

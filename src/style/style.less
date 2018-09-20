@@ -8,5 +8,47 @@
 }
 .ant-layout-footer{
     background: #f6f6f6;
-    border:1px solid #ddd;    
+    border:1px solid #ddd;  
+    padding: 0;
+    line-height: 70px;
+    .media-control{
+        width:200px;
+        float: left;
+        text-align: center;
+    } 
+    .media-slider{
+        float:left;
+        width:400px;
+        height: 70px;
+        .ant-slider-rail{
+            background: #afafaf;
+        }
+        .ant-slider-track{
+            background: #c83027;
+        }
+    }
+    .media-time{
+        float: left;
+        color:#888;
+        width:90px;
+        margin-left:10px;
+    }
+    .media-voice{
+        float: left;
+        width:150px;
+        margin-left:30px;
+        .ant-slider-rail{
+            background: #dedede;
+        }
+        .ant-slider-track{
+            background: #c83027;
+        }
+    }
+    .media-end{
+        float: left;
+        width:100px;
+    }
+    .media-pointer{
+        cursor: pointer;
+    }
 }
