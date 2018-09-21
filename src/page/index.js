@@ -9,10 +9,10 @@ class Index extends Component {
     render() {
         return (
             <Layout>
-                <Header style={{height: 70}}>
+                <Header style={{height: 64}}>
                     <LayoutHeader />
                 </Header>
-                <Layout style={{ minHeight: 'calc(100vh - 140px)' }}>
+                <Layout style={{ minHeight: 'calc(100vh - 134px)' }}>
                     <Sider>
                         <LayoutSider />
                     </Sider>

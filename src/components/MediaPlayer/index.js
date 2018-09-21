@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
 import { Button, Slider, Icon, Badge } from 'antd';
+import { observer, inject } from 'mobx-react';
 
+@inject('mediaStore')
+@observer
 export default class MediaPlayer extends Component {
     render() {
+        console.log(this.props);
         return (
             <div>
                 <div className="media-control">
