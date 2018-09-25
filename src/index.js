@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactDom from 'react-dom';
 import App from './App';
 import './index.css';
-import stores from './stores';
+import * as stores from './stores';
 import {Provider} from 'mobx-react';
 
 const {...storesArray} = stores;
