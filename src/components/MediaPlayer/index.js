@@ -1,23 +1,37 @@
 import React, { Component } from 'react'
 import { Button, Slider, Icon, Badge } from 'antd';
 import { observer, inject } from 'mobx-react';
+import ReactAudioPlayer from 'react-audio-player';
+import { toJS } from 'mobx';
+import { millisecondToMin } from '../../utils/tools';
 
 @inject('mediaStore')
 @observer
 export default class MediaPlayer extends Component {
-    componentWillMount() {
+    audio = React.createRef();
+    componentDidMount() {
         this.props.mediaStore.getSongDetail();
-    }
-    hanlderplay = ()=> {
         this.props.mediaStore.getSongUrl();
     }
+    hanlderPause = () => {
+        this.props.mediaStore.togglePlay();
+        this.audio.current.audioEl.pause();
+    }
+    hanlderPlay = () => {
+        this.props.mediaStore.togglePlay();
+        this.audio.current.audioEl.play();
+    }
     render() {
-        const { mediaStore } = this.props;
+        let { currentSongUrl, playing, currentSongDetail } = this.props.mediaStore;
         return (
             <div>
                 <div className="media-control">
                     <Button type="primary" shape="circle" icon="step-backward" size='default' />
-                    <Button type="primary" shape="circle" icon="caret-right" size='large' style={{ margin: '0 20px' }} onClick={this.hanlderplay}/>
+                    {
+                        playing ?
+                            <Button type="primary" shape="circle" icon="pause" size='large' style={{ margin: '0 20px' }} onClick={this.hanlderPause} /> :
+                            <Button type="primary" shape="circle" icon="caret-right" size='large' style={{ margin: '0 20px' }} onClick={this.hanlderPlay} />
+                    }
                     <Button type="primary" shape="circle" icon="step-forward" size='default' />
                 </div>
                 <div className="media-slider" style={{ width: 'calc(100vw - 590px)' }}>
@@ -26,7 +40,7 @@ export default class MediaPlayer extends Component {
                 <div className="media-time">
                     <span>01:11</span>
                     <span>/</span>
-                    <span>03:51</span>
+                    <span>{currentSongDetail && millisecondToMin(toJS(currentSongDetail).songs[0].dt)}</span>
                 </div>
                 <div className="media-voice">
                     <Icon type="sound" theme="filled" style={{ fontSize: 16 }} className="media-pointer" />
@@ -39,9 +53,11 @@ export default class MediaPlayer extends Component {
                         <Badge count={4} style={{ backgroundColor: '#c0c0c0', color: '#fff', marginBottom: 5 }} />
                     </div>
                 </div>
-                <video autoplay name="media">
-                    <source src={this.props.mediaStore.currentSongUrl} type="audio/mpeg"/>
-                </video>
+                <ReactAudioPlayer
+                    onCanPlay={this.canplay}
+                    src={currentSongUrl}
+                    ref={this.audio}
+                />
             </div>)
     }
 }
