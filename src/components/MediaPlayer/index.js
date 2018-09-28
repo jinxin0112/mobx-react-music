@@ -9,6 +9,10 @@ import { millisecondToMin } from '../../utils/tools';
 @observer
 export default class MediaPlayer extends Component {
     audio = React.createRef();
+    state = {
+        currentPlayCount: 0,
+        currentPlayTime: millisecondToMin(0)
+    }
     componentDidMount() {
         this.props.mediaStore.getSongDetail();
         this.props.mediaStore.getSongUrl();
@@ -20,9 +24,25 @@ export default class MediaPlayer extends Component {
     hanlderPlay = () => {
         this.props.mediaStore.togglePlay();
         this.audio.current.audioEl.play();
+        let count = this.state.currentPlayCount;
+        setInterval(()=>{
+            count++;
+            if(count<this.props.mediaStore.currentSongDuration){
+                this.setState({
+                    currentPlayCount: count*1000,
+                    currentPlayTime: millisecondToMin(count*1000)
+                })
+            }
+        },1000)
+    }
+    handlePlaying = () => {
+        console.log('time', this.audio.current.audioEl.currentTime); 
+    }
+    canplay = ()=> {
+       console.log('time', this.audio.current.audioEl.currentTime); 
     }
     render() {
-        let { currentSongUrl, playing, currentSongDetail } = this.props.mediaStore;
+        let { currentSongUrl, playing, currentSongDetail, currentSongDuration } = this.props.mediaStore;
         return (
             <div>
                 <div className="media-control">
@@ -35,12 +55,15 @@ export default class MediaPlayer extends Component {
                     <Button type="primary" shape="circle" icon="step-forward" size='default' />
                 </div>
                 <div className="media-slider" style={{ width: 'calc(100vw - 590px)' }}>
-                    <Slider style={{ marginTop: 29 }} />
+                    <Slider style={{ marginTop: 29 }} 
+                        max={currentSongDuration}
+                        value={this.state.currentPlayCount}
+                    />
                 </div>
                 <div className="media-time">
-                    <span>01:11</span>
+                    <span>{this.state.currentPlayTime}</span>
                     <span>/</span>
-                    <span>{currentSongDetail && millisecondToMin(toJS(currentSongDetail).songs[0].dt)}</span>
+                    <span>{currentSongDuration && millisecondToMin(currentSongDuration)}</span>
                 </div>
                 <div className="media-voice">
                     <Icon type="sound" theme="filled" style={{ fontSize: 16 }} className="media-pointer" />
@@ -55,6 +78,7 @@ export default class MediaPlayer extends Component {
                 </div>
                 <ReactAudioPlayer
                     onCanPlay={this.canplay}
+                    onPlay={this.handlePlaying}
                     src={currentSongUrl}
                     ref={this.audio}
                 />

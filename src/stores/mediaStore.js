@@ -10,6 +10,8 @@ class mediaStore {
     @observable currentSongId = 347230;
     @observable currentSongDetail = null;
     @observable currentSongUrl = '';
+    @observable currentSongDuration = 0;
+
     @observable playList = [];
 
     @action 
@@ -20,6 +22,7 @@ class mediaStore {
     getSongDetail = async () => {
         const detail = await getSongDetail(this.currentSongId);
         this.currentSongDetail = detail;
+        this.currentSongDuration = detail.songs[0].dt;
     }
     @action
     getSongUrl = async () => {
